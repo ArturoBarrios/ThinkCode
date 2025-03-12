@@ -1,0 +1,56 @@
+
+
+
+// {
+//   "compilerOptions": {
+//     "baseUrl": "./",
+//     "paths": {
+//       "~/*": ["./src/*"],
+//       "@/*": ["./src/*"]
+//     },
+//     "rootDirs": ["src"],
+//     "outDir": "dist",
+//     "module": "CommonJS",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true
+//   }
+// }
+
+
+
+
+// {
+//   "compilerOptions": {
+//     "baseUrl": "./",
+//     "rootDir": "src",
+//     "outDir": "dist",
+//     "lib": ["es2020"],
+//     "target": "es2020",
+//     "module": "CommonJS",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true,
+//     "strict": true,
+//     "types": ["node"]
+//   },
+//   "include": ["src"]
+// }
+
+{
+  "compilerOptions": {
+    "rootDir": ".",  // Changed from "src" to include all directories
+    "outDir": "dist",
+    "lib": ["es2020"],
+    "target": "es2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "types": ["node"],
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "db"]
+}
