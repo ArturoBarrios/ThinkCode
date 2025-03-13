@@ -61,9 +61,44 @@ export const resolvers = {
       return true;
     },
     // New Mutation: analyzeProblem
-    analyzeProblem: (_: any, { problemText }: { problemText: string }) => {
-        // Implement your problem analysis logic here
-        return `Analysis result for: ${problemText}`;
-      },
+    // New Mutation: analyzeProblem
+    analyzeProblem: async (
+      _: any,
+      { problemText }: { problemText: string },
+      context: any
+    ) => {
+            // Construct the prompt for OpenAI
+            const prompt = `
+      You are an expert algorithm tutor. Analyze the following LeetCode problem description and provide:
+      1. An estimate of the runtime complexity.
+      2. An estimate of the space complexity.
+      3. Common algorithms or data structures that might solve this problem.
+      4. One or two similar problems that share the same core idea.
+      5. A few hints or ideas to help solve the problem.
+
+      LeetCode Problem:
+      ${problemText}
+            `;
+
+      try {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4", // or "gpt-4o" if that's the correct model identifier
+          messages: [{ role: "user", content: prompt }],
+          temperature: 1,
+          max_tokens: 1024,
+          top_p: 1,
+        });
+
+        const analysis =
+          completion.choices[0].message?.content || "No analysis provided.";
+        
+        // Optionally, you could store this analysis in your database via Prisma here
+
+        return analysis;
+      } catch (error) {
+        console.error("Error in analyzeProblem mutation:", error);
+        throw new Error("Analysis failed.");
+      }
+    },
   },
 };
